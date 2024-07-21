@@ -31,7 +31,7 @@ const Footer= (props) => {
     return (
         <div className="grid grid-cols-1 gap-2 xl:grid-cols-2">
         <span className="lg:text-lg text-xs font-bold">{price.toLocaleString('id-ID',{style:'currency',currency:'IDR'})}</span>
-        <Button classess="text-xs xl:text-lg tracking-wide rounded px-2 py-2 lg:py-1 lg:rounded" onClick={()=>handleAddToCart(id)}> Checkout </Button>
+        <Button classess="text-xs xl:text-lg tracking-wide rounded px-2 py-2 lg:py-1 lg:rounded" onClick={()=>handleAddToCart(id)}> Add To Cart </Button>
       </div>
     )
 }
