@@ -22,7 +22,7 @@ const Body =(props) => {
     return (
         <div className="py-5">
         <h1 className="font-bold">{name.substring(0,20)}</h1>
-        <p className="text-xs tracking-wide mt-3">{children.substring(0,200)}</p>
+        <p className="text-xs tracking-wide mt-3">{children.substring(0,70)}</p>
       </div>
     )
 }
