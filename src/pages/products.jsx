@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Navbar from "../components/Fragments/Navbar";
 import "flowbite";
+
 const products = [
   {
     id: 1,
@@ -46,26 +47,58 @@ const products = [
 ];
 
 export default function ProductsPage() {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      quantity: 1,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem("cart")) || []);
+  }, []);
+  useEffect(() => {
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc, item) => {
+        const product = products.find((product) => product.id === item.id);
+        return acc + product.product_price * item.quantity;
+      }, 0);
+      setTotalPrice(sum);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
   const handleAddToCart = (id) => {
     if (cart.find((item) => item.id === id)) {
-      setCart(cart.map((item) => item.id == id ? {...item,quantity:item.quantity+1} : item));
-    }else {
+      setCart(
+        cart.map((item) =>
+          item.id == id ? { ...item, quantity: item.quantity + 1 } : item,
+        ),
+      );
+    } else {
       setCart([
         ...cart,
         {
-          id:id,
-          quantity:1
-        }
-      ])
+          id: id,
+          quantity: 1,
+        },
+      ]);
     }
   };
+
+  // useReff
+  const cartRef = useRef([{ id: 1, quantity: 1 }]);
+
+  const handleAddCartRef = (id) => {
+    cartRef.current = [...cartRef.current, { id: id, quantity: 1 }];
+    localStorage.setItem("cart", JSON.stringify(cartRef.current));
+  };
+  
+  const totalPriceRef = useRef(null);
+  useEffect(() => {
+    if (cart.length > 0) {
+      totalPriceRef.current.style.display = "table-row"
+
+    }else {
+      totalPriceRef.current.style.display = "none"
+    }
+  }, [cart]);
+
   return (
     <>
       <Navbar />
@@ -107,7 +140,7 @@ export default function ProductsPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody  >
                 {cart.map((item) => {
                   const product = products.find(
                     (product) => product.id === item.id,
@@ -139,6 +172,17 @@ export default function ProductsPage() {
                     </tr>
                   );
                 })}
+                <tr className="bg-white dark:bg-gray-800" ref={totalPriceRef}>
+                  <td className="px-6 py-4" colSpan={3}>
+                    Total Price
+                  </td>
+                  <td className="px-6 py-4" >
+                    {totalPrice.toLocaleString("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    })}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
