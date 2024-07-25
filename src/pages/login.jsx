@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthLayouts from "../components/layouts/AuthLayouts";
 import FormLogin from "../components/Fragments/FormLogin";
 import Input from "../components/Elements/Input/Input";
@@ -6,6 +6,13 @@ import Label from "../components/Elements/Input/Label";
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      window.location.href = "/product";
+    }
+   
+  }, []);
   return (
     <>
       <div className="flex justify-center min-h-screen items-center">
