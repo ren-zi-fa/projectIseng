@@ -18,6 +18,7 @@ export default function ProductsPage() {
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
   }, []);
+
   useEffect(() => {
     if (products.length > 0 && cart.length > 0) {
       const sum = cart.reduce((acc, item) => {
@@ -70,7 +71,7 @@ export default function ProductsPage() {
         <div className="col-span-2 bg-blue-400 grid grid-cols-2 xl:grid-cols-2 lg: p-4 gap-3 place-content-center justify-center min-h-screen">
           {products.map((product) => (
             <CardProduct key={product.id}>
-              <CardProduct.Header src={product.image} />
+              <CardProduct.Header src={product.image} id={product.id}/>
               <CardProduct.Body name={product.title}>
                 {product.description}
               </CardProduct.Body>

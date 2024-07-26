@@ -34,7 +34,7 @@ export default function CobaSaja() {
       kelas: "ewif-7",
     },
   ]);
-  console.log(...item);
+
   return (
     <div className="bg-slate-200 min-h-screen  ">
       <div className="grid grid-cols-3 place-content-center items-center gap-4 p-2">

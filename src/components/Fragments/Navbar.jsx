@@ -2,26 +2,17 @@ import React, { useEffect, useState } from "react";
 import Button from "../Elements/Button";
 import "flowbite";
 import { Link } from "react-router-dom";
-import { getUsername } from "../../services/auth.service";
+
+import { useLogin } from "../../hooks/useLogin";
 
 const Navbar = () => {
-  const [username, setUsername] = useState("");
+  const username = useLogin();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("cart");
     window.location.href = "/login";
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setUsername(getUsername(token));
-    }else {
-      window.location.href = "/login";
-    }
-   
-  }, []);
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -67,17 +58,21 @@ const Navbar = () => {
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <Link
-                  to="/"
+                  to="/products"
                   className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                   aria-current="page"
                 >
-                  Home
+                 Product
                 </Link>
               </li>
               <li>
-                <p className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                  {username}
-                </p>
+              <Link
+                  to="/profile"
+                  className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                  aria-current="page"
+                >
+                 {username}
+                </Link>
               </li>
               <li>
                 <Button

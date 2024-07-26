@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../Elements/Button";
+import { Link } from "react-router-dom";
 
 const CardProduct = (props) => {
     const {children} = props
@@ -10,11 +11,11 @@ const CardProduct = (props) => {
   );
 };
 const Header = (props) => {
-    const {src} = props
+    const {src,id} = props
   return (
-    <a href="">
+    <Link to={`/products/${id}`}>
       <img src={src} alt="" className="rounded-lg mx-auto h-36 object-cover w-full" />
-    </a>
+    </Link>
   );
 };
 const Body =(props) => {

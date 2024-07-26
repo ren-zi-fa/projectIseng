@@ -7,6 +7,8 @@ import "./assets/styles/index.css";
 import ErrorPageNotfound from "./pages/404";
 import CobaSaja from "./components/layouts/CobaSaja";
 import ProductsPage from "./pages/products";
+import Profile from "./pages/profile";
+import DetailProduct from "./pages/detailProduct";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,8 +24,16 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: "/product",
+    path: "/products",
     element: <ProductsPage />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/products/:id",
+    element: <DetailProduct />,
   },
 ]);
 
