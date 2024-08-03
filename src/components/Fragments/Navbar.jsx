@@ -4,15 +4,23 @@ import "flowbite";
 import { Link } from "react-router-dom";
 
 import { useLogin } from "../../hooks/useLogin";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const username = useLogin();
-
+  const cart = useSelector((state) => state.cart.data);
+  const [totalCart, setTotalCart] = useState(0);
+  const [isOpen,setIsOpen] = useState("false")
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
-
+  useEffect(() => {
+    const sum = cart.reduce((acc, item) => {
+      return acc + item.quantity;
+    }, 0);
+    setTotalCart(sum);
+  },[cart]);
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -57,21 +65,43 @@ const Navbar = () => {
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
+                <div className="inline-flex items-center bg-orange-400 rounded-xl px-2 py-1">
+                  <svg
+                    className="w-6 h-6 text-red-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z"
+                    />
+                  </svg>
+                  <p className="text-white">{totalCart}</p>
+                </div>
+              </li>
+              <li>
                 <Link
                   to="/products"
                   className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                   aria-current="page"
                 >
-                 Product
+                  Product
                 </Link>
               </li>
               <li>
-              <Link
+                <Link
                   to="/profile"
                   className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                   aria-current="page"
                 >
-                 {username}
+                  {username}
                 </Link>
               </li>
               <li>

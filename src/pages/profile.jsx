@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Fragments/Navbar";
 import { useLogin } from "../hooks/useLogin";
-
+import "flowbite"
 const Profile = () => {
   const username = useLogin();
 
